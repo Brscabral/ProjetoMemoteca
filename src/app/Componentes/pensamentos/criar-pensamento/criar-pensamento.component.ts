@@ -1,3 +1,6 @@
+import { Router } from '@angular/router';
+import { PensamentoService } from '../pensamento.service';
+import { Pensamento } from './../pensamento';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,19 +10,30 @@ import { Component } from '@angular/core';
 })
 
 
+
 export class CriarPensamentoComponent {
-  pensamento ={
-    id: '1',
-    conteudo: 'Aprendendo Angular',
-    autoria: 'Dev',
-    modelo: ''
+  pensamento: Pensamento ={
+    
+    conteudo: '',
+    autoria: '',
+    modelo: 'modelo1'
 
   }
+
+  constructor(
+    private router: Router,
+    private service: PensamentoService){}
+  ngOnInit(): void{
+    
+  }
   Salvar(){
-    alert("O botão de salvar foi clicado");
+    this.service.criar(this.pensamento).subscribe(() =>{
+      this.router.navigate(['/listarPensamento'])
+      
+    })
   }
   Cancelar(){
-    alert("O botão de cancelar foi clicado");
+    this.router.navigate(['/listarPensamento'])
   }
 
 }
